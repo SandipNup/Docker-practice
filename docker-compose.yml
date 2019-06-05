@@ -1,0 +1,21 @@
+version: '3'
+services:   #list of the containers you want to build
+  web: 
+    # build: .      #(.)means serch for Dockerfile in current directory
+    build: 
+      context: .    #look in the current directory
+      dockerfile: Dockerfile.dev  #name of the dockerfile that we want to build image form
+    ports:
+      - "3000:3000"  #post mapping 3000 in your machine to 3000 in your container
+    volumes:
+      - /app/node_modules #dont map to node_modeules folder inside the container to your local machine
+      - .:/app            #map current directory files or folders in loacl machine to app folder in container
+  test:    #creating the second service which purpose is for running the test
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm","run","test"]    #command that override the startup command that is specified in the 
+      
