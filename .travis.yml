@@ -1,0 +1,16 @@
+#any time we make the use of docker we need to have sudo permission
+sudo: required
+
+#install a copy of docker 
+services:
+  - docker
+
+#contains series of commands that are runned befroe we run our test or deploy our project
+before_install:
+  - docker build -t sandip/docker-practice -f Dockerfile.dev .
+
+#contains all the command needed to execute our test
+scripts:
+  - docker run sandip/docker-practice npm run test -- --coverage
+
+#here -- --coverage means exit the instant first run is completed 
